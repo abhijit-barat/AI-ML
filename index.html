@@ -1,0 +1,559 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI &amp; Machine Learning</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+  <script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: {
+        outfit: ['Outfit', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace']
+      }
+    }
+  }
+}
+</script>
+  <style>
+html { scroll-behavior: smooth; }
+body { font-family: 'Outfit', sans-serif; }
+
+/* Glowing Text Effects */
+.glow-blue { text-shadow: 0 0 20px rgba(56,189,248,0.6), 0 0 40px rgba(56,189,248,0.3); }
+.glow-purple { text-shadow: 0 0 20px rgba(168,85,247,0.6), 0 0 40px rgba(168,85,247,0.3); }
+.glow-cyan { text-shadow: 0 0 20px rgba(34,211,238,0.5); }
+
+/* Premium Card Styling */
+.card-glow { 
+  box-shadow: 0 0 30px -5px rgba(56,189,248,0.15), inset 0 1px 0 rgba(255,255,255,0.05), 0 0 60px -10px rgba(56,189,248,0.08);
+  transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+.card-glow:hover { 
+  box-shadow: 0 0 50px -5px rgba(168,85,247,0.35), inset 0 1px 0 rgba(255,255,255,0.12), 0 0 80px -10px rgba(56,189,248,0.15);
+  transform: translateY(-4px);
+  border-color: rgba(168,85,247,0.4) !important;
+}
+
+/* Gradient Borders */
+.gradient-border { background: linear-gradient(135deg, rgba(56,189,248,0.2), rgba(168,85,247,0.2)); }
+.gradient-border-alt { background: linear-gradient(135deg, rgba(56,189,248,0.15), rgba(34,211,238,0.15), rgba(168,85,247,0.15)); }
+
+/* Neon Line Animation */
+.neon-line { background: linear-gradient(90deg, #38bdf8, #a855f7, #38bdf8); background-size: 200% 100%; animation: shimmer 3s linear infinite; }
+@keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+
+/* Float Animation */
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-15px)} }
+.animate-float { animation: float 6s ease-in-out infinite; }
+
+/* Fade Up Animation */
+@keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+.fade-up { animation: fadeUp 0.8s ease forwards; }
+
+/* Pulse Glow Animation */
+@keyframes pulseGlow { 0%,100%{box-shadow: 0 0 20px rgba(56,189,248,0.4)} 50%{box-shadow: 0 0 40px rgba(56,189,248,0.6)} }
+.pulse-glow { animation: pulseGlow 2s ease-in-out infinite; }
+
+/* Slide In Animation */
+@keyframes slideInRight { from{opacity:0;transform:translateX(30px)} to{opacity:1;transform:translateX(0)} }
+@keyframes slideInLeft { from{opacity:0;transform:translateX(-30px)} to{opacity:1;transform:translateX(0)} }
+
+/* Timeline Styling */
+.timeline-dot { 
+  box-shadow: 0 0 15px rgba(56,189,248,0.6);
+  transition: all 0.3s ease;
+}
+.timeline-dot:hover { 
+  box-shadow: 0 0 25px rgba(168,85,247,0.8);
+  transform: scale(1.3);
+}
+
+/* Code Block Styling */
+pre code { font-family: 'JetBrains Mono', monospace; }
+
+/* Hero Background Orbs */
+.hero-orb-1 { 
+  position:absolute; width:400px; height:400px; border-radius:50%; 
+  background:radial-gradient(circle, rgba(56,189,248,0.15) 0%, transparent 70%); 
+  top:-100px; right:-100px; 
+  animation: float 8s ease-in-out infinite;
+  filter: blur(2px);
+}
+.hero-orb-2 { 
+  position:absolute; width:300px; height:300px; border-radius:50%; 
+  background:radial-gradient(circle, rgba(168,85,247,0.12) 0%, transparent 70%); 
+  bottom:-50px; left:-50px; 
+  animation: float 10s ease-in-out infinite 2s;
+  filter: blur(2px);
+}
+
+/* Section Dividers */
+.section-divider { 
+  background: linear-gradient(90deg, transparent, rgba(56,189,248,0.2), transparent);
+  height: 1px;
+}
+
+/* Glass Effect */
+.glass-effect { 
+  background: rgba(15,23,42,0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(56,189,248,0.1);
+}
+
+/* Premium Button */
+.btn-premium {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+.btn-premium::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s ease;
+}
+.btn-premium:hover::before {
+  left: 100%;
+}
+
+/* Tech Grid Background */
+.tech-grid {
+  background-image: 
+    linear-gradient(rgba(56,189,248,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(56,189,248,0.05) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* Section Title Animation */
+.title-animate {
+  animation: fadeUp 0.8s ease forwards;
+}
+.title-animate.stagger-1 { animation-delay: 0.1s; }
+.title-animate.stagger-2 { animation-delay: 0.2s; }
+.title-animate.stagger-3 { animation-delay: 0.3s; }
+
+/* Hover Scale Effect */
+.hover-scale {
+  transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+/* Subtle Grid Pattern */
+.grid-pattern::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(rgba(56,189,248,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(56,189,248,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+</style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full bg-gray-950 text-gray-200 overflow-auto">
+  <div id="app" class="w-full h-full">
+   <!-- Nav -->
+   <nav class="fixed top-0 w-full z-50 backdrop-blur-xl bg-gray-950/70 border-b border-white/5">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+     <div class="flex items-center gap-2">
+      <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-sky-400 to-purple-500 flex items-center justify-center">
+       <i data-lucide="brain" class="w-5 h-5 text-white"></i>
+      </div><span class="font-outfit font-bold text-white tracking-tight">AI&amp;ML</span>
+     </div>
+     <div class="hidden md:flex gap-6 text-sm text-gray-400">
+      <a href="#history" class="hover:text-sky-400 transition">History</a> <a href="#concepts" class="hover:text-sky-400 transition">Concepts</a> <a href="#math" class="hover:text-sky-400 transition">Math</a> <a href="#code" class="hover:text-sky-400 transition">Code</a> <a href="#apps" class="hover:text-sky-400 transition">Applications</a> <a href="#future" class="hover:text-sky-400 transition">Future</a>
+     </div>
+    </div>
+   </nav><!-- Hero -->
+   <section class="relative min-h-screen flex items-center justify-center overflow-hidden px-6 tech-grid">
+    <div class="hero-orb-1"></div>
+    <div class="hero-orb-2"></div>
+    <div class="absolute inset-0" style="background: radial-gradient(ellipse at 50% 30%, rgba(56,189,248,0.08) 0%, transparent 60%), radial-gradient(ellipse at 60% 80%, rgba(168,85,247,0.06) 0%, transparent 50%);"></div>
+    <div class="relative text-center max-w-4xl mx-auto fade-up z-10">
+     <div class="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-sky-500/30 bg-sky-500/8 text-sky-300 text-sm mb-10 backdrop-blur-sm hover-scale">
+      <i data-lucide="sparkles" class="w-4 h-4 animate-pulse"></i> <span class="font-medium">The Future is Intelligent</span>
+     </div>
+     <h1 id="heroTitle" class="text-6xl md:text-8xl font-outfit font-800 text-white leading-tight tracking-tighter glow-blue mb-2 title-animate">Artificial Intelligence<br><span class="bg-gradient-to-r from-sky-400 via-cyan-400 to-purple-500 bg-clip-text text-transparent animate-pulse">&amp; Machine Learning</span></h1>
+     <p id="heroSubtitle" class="mt-8 text-xl md:text-2xl text-gray-300 font-light max-w-2xl mx-auto leading-relaxed title-animate stagger-1">Transforming the Future of Technology</p>
+     <div class="flex gap-4 justify-center mt-12 title-animate stagger-2">
+      <div class="neon-line h-1 w-16 rounded-full"></div>
+      <div class="neon-line h-1 w-8 rounded-full opacity-60"></div>
+     </div>
+     <p id="creatorName" class="mt-10 text-sm text-gray-400 tracking-widest uppercase font-semibold title-animate stagger-3">Created by Abhijit Barat</p><a href="#history" class="inline-flex items-center gap-2 mt-12 px-8 py-4 rounded-full bg-gradient-to-r from-sky-500 to-purple-600 text-white font-semibold hover:shadow-2xl hover:shadow-sky-500/30 transition-all btn-premium title-animate stagger-3"> Explore Further <i data-lucide="arrow-right" class="w-4 h-4"></i> </a>
+    </div>
+   </section><!-- History -->
+   <section id="history" class="py-32 px-6 relative">
+    <div class="section-divider mb-20"></div>
+    <div class="max-w-5xl mx-auto">
+     <h2 class="text-4xl md:text-5xl font-outfit font-800 text-white text-center glow-purple mb-3">Evolution of AI</h2>
+     <p class="text-gray-400 text-center mb-20 max-w-2xl mx-auto text-lg">From philosophical thought experiments to systems that reshape industries.</p>
+     <div class="relative">
+      <div class="absolute left-1/2 -translate-x-px w-1 h-full bg-gradient-to-b from-sky-500/50 via-purple-500/50 to-transparent hidden md:block rounded-full"></div>
+      <div class="space-y-16">
+       <div class="md:flex items-center gap-8">
+        <div class="md:w-1/2 md:text-right">
+         <div class="gradient-border rounded-2xl p-8 card-glow border border-sky-500/20 transition-all duration-300 hover-scale"><span class="text-sky-400 font-mono text-sm font-semibold tracking-wide">1950s</span>
+          <h3 class="text-white font-semibold text-lg mt-2">The Birth of AI</h3>
+          <p class="text-gray-300 text-sm mt-3 leading-relaxed">Alan Turing proposes the Turing Test. The Dartmouth Conference coins "Artificial Intelligence."</p>
+         </div>
+        </div>
+        <div class="hidden md:flex justify-center">
+         <div class="w-5 h-5 rounded-full bg-gradient-to-br from-sky-400 to-cyan-500 timeline-dot"></div>
+        </div>
+        <div class="md:w-1/2"></div>
+       </div>
+       <div class="md:flex items-center gap-8">
+        <div class="md:w-1/2"></div>
+        <div class="hidden md:flex justify-center">
+         <div class="w-5 h-5 rounded-full bg-gradient-to-br from-purple-400 to-pink-500 timeline-dot"></div>
+        </div>
+        <div class="md:w-1/2">
+         <div class="gradient-border rounded-2xl p-8 card-glow border border-purple-500/20 transition-all duration-300 hover-scale"><span class="text-purple-400 font-mono text-sm font-semibold tracking-wide">1980s–90s</span>
+          <h3 class="text-white font-semibold text-lg mt-2">Expert Systems &amp; ML Rise</h3>
+          <p class="text-gray-300 text-sm mt-3 leading-relaxed">Rule-based expert systems flourish. Neural networks gain traction with backpropagation.</p>
+         </div>
+        </div>
+       </div>
+       <div class="md:flex items-center gap-8">
+        <div class="md:w-1/2 md:text-right">
+         <div class="gradient-border rounded-2xl p-8 card-glow border border-sky-500/20 transition-all duration-300 hover-scale"><span class="text-sky-400 font-mono text-sm font-semibold tracking-wide">2010s–Now</span>
+          <h3 class="text-white font-semibold text-lg mt-2">Deep Learning Revolution</h3>
+          <p class="text-gray-300 text-sm mt-3 leading-relaxed">GPUs, big data, and transformers enable breakthroughs in vision, language, and generative AI.</p>
+         </div>
+        </div>
+        <div class="hidden md:flex justify-center">
+         <div class="w-5 h-5 rounded-full bg-gradient-to-br from-sky-400 to-cyan-500 timeline-dot"></div>
+        </div>
+        <div class="md:w-1/2"></div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Concepts -->
+   <section id="concepts" class="py-32 px-6 bg-gray-900/60 relative">
+    <div class="section-divider mb-20"></div>
+    <div class="max-w-5xl mx-auto">
+     <h2 class="text-4xl md:text-5xl font-outfit font-800 text-white text-center glow-blue mb-3">Core Concepts</h2>
+     <p class="text-gray-400 text-center mb-20 max-w-2xl mx-auto text-lg">Understanding AI &amp; ML in simple, human terms.</p>
+     <div class="grid md:grid-cols-3 gap-8 mb-12">
+      <div class="gradient-border rounded-2xl p-10 card-glow border border-sky-500/20 text-center transition-all duration-300 hover-scale group">
+       <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-sky-500/20 to-cyan-500/20 flex items-center justify-center mx-auto mb-6 group-hover:bg-gradient-to-br group-hover:from-sky-500/30 group-hover:to-cyan-500/30 transition-all"><i data-lucide="cpu" class="w-8 h-8 text-sky-400"></i>
+       </div>
+       <h3 class="text-white font-semibold text-xl">Artificial Intelligence</h3>
+       <p class="text-gray-400 text-sm mt-4 leading-relaxed">Machines that simulate human thinking — recognizing speech, making decisions, translating languages.</p>
+      </div>
+      <div class="gradient-border rounded-2xl p-10 card-glow border border-purple-500/20 text-center transition-all duration-300 hover-scale group">
+       <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 flex items-center justify-center mx-auto mb-6 group-hover:bg-gradient-to-br group-hover:from-purple-500/30 group-hover:to-pink-500/30 transition-all"><i data-lucide="trending-up" class="w-8 h-8 text-purple-400"></i>
+       </div>
+       <h3 class="text-white font-semibold text-xl">Machine Learning</h3>
+       <p class="text-gray-400 text-sm mt-4 leading-relaxed">A subset of AI where systems learn patterns from data instead of being explicitly programmed.</p>
+      </div>
+      <div class="gradient-border rounded-2xl p-10 card-glow border border-emerald-500/20 text-center transition-all duration-300 hover-scale group">
+       <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-emerald-500/20 to-teal-500/20 flex items-center justify-center mx-auto mb-6 group-hover:bg-gradient-to-br group-hover:from-emerald-500/30 group-hover:to-teal-500/30 transition-all"><i data-lucide="layers" class="w-8 h-8 text-emerald-400"></i>
+       </div>
+       <h3 class="text-white font-semibold text-xl">Deep Learning</h3>
+       <p class="text-gray-400 text-sm mt-4 leading-relaxed">Neural networks with many layers that excel at image recognition, NLP, and generative tasks.</p>
+      </div>
+     </div>
+     <div class="gradient-border rounded-2xl p-10 card-glow border border-amber-500/20">
+      <h3 class="text-white font-semibold text-lg mb-6 flex items-center gap-3"><i data-lucide="lightbulb" class="w-6 h-6 text-amber-400"></i> Real-Life Examples</h3>
+      <div class="grid md:grid-cols-2 gap-6 text-sm">
+       <div class="flex items-start gap-4 p-4 rounded-lg bg-sky-500/5 border border-sky-500/10"><span class="text-sky-400 font-bold text-lg mt-0.5">→</span>
+        <div>
+         <strong class="text-gray-200 block">Netflix</strong><span class="text-gray-400">Recommends shows using collaborative filtering ML models.</span>
+        </div>
+       </div>
+       <div class="flex items-start gap-4 p-4 rounded-lg bg-purple-500/5 border border-purple-500/10"><span class="text-purple-400 font-bold text-lg mt-0.5">→</span>
+        <div>
+         <strong class="text-gray-200 block">Google Photos</strong><span class="text-gray-400">Recognizes faces using convolutional neural networks.</span>
+        </div>
+       </div>
+       <div class="flex items-start gap-4 p-4 rounded-lg bg-sky-500/5 border border-sky-500/10"><span class="text-sky-400 font-bold text-lg mt-0.5">→</span>
+        <div>
+         <strong class="text-gray-200 block">Siri &amp; Alexa</strong><span class="text-gray-400">Understand speech through natural language processing.</span>
+        </div>
+       </div>
+       <div class="flex items-start gap-4 p-4 rounded-lg bg-purple-500/5 border border-purple-500/10"><span class="text-purple-400 font-bold text-lg mt-0.5">→</span>
+        <div>
+         <strong class="text-gray-200 block">Spam Filters</strong><span class="text-gray-400">Classify emails using trained classification algorithms.</span>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Math -->
+   <section id="math" class="py-32 px-6 relative">
+    <div class="section-divider mb-20"></div>
+    <div class="max-w-4xl mx-auto">
+     <h2 class="text-4xl md:text-5xl font-outfit font-800 text-white text-center glow-purple mb-3">The Math Behind ML</h2>
+     <p class="text-gray-400 text-center mb-20 max-w-2xl mx-auto text-lg">Linear Regression — the simplest predictive model.</p>
+     <div class="gradient-border rounded-2xl p-12 md:p-16 card-glow border border-purple-500/20">
+      <div class="text-center mb-12">
+       <div class="inline-block px-12 py-6 rounded-xl bg-gradient-to-br from-gray-800/80 to-gray-700/60 border border-purple-500/20 shadow-2xl shadow-purple-500/20">
+        <span class="font-mono text-3xl md:text-4xl text-white tracking-wider">ŷ = <span class="text-sky-400 font-bold">w</span>x + <span class="text-purple-400 font-bold">b</span></span>
+       </div>
+      </div>
+      <div class="grid md:grid-cols-3 gap-6 mb-8 text-sm">
+       <div class="text-center p-6 rounded-xl bg-sky-500/5 border border-sky-500/10 hover-scale"><span class="text-sky-400 font-mono font-bold text-2xl">w</span>
+        <p class="text-gray-400 mt-3 leading-relaxed"><strong>Weight</strong> — slope of the line. Controls how much input affects output.</p>
+       </div>
+       <div class="text-center p-6 rounded-xl bg-purple-500/5 border border-purple-500/10 hover-scale"><span class="text-purple-400 font-mono font-bold text-2xl">b</span>
+        <p class="text-gray-400 mt-3 leading-relaxed"><strong>Bias</strong> — y-intercept. Shifts the prediction up or down.</p>
+       </div>
+       <div class="text-center p-6 rounded-xl bg-emerald-500/5 border border-emerald-500/10 hover-scale"><span class="text-emerald-400 font-mono font-bold text-2xl">ŷ</span>
+        <p class="text-gray-400 mt-3 leading-relaxed"><strong>Prediction</strong> — the output value the model estimates for a given x.</p>
+       </div>
+      </div>
+      <p class="text-gray-400 text-center text-base leading-relaxed p-6 rounded-lg bg-gradient-to-r from-sky-500/5 to-purple-500/5 border border-white/5">The model finds optimal <span class="text-sky-400 font-semibold">w</span> and <span class="text-purple-400 font-semibold">b</span> by minimizing the <strong>Mean Squared Error (MSE)</strong> between predictions and actual values using <strong>gradient descent</strong>.</p>
+     </div>
+    </div>
+   </section><!-- Code -->
+   <section id="code" class="py-32 px-6 bg-gray-900/60 relative">
+    <div class="section-divider mb-20"></div>
+    <div class="max-w-4xl mx-auto">
+     <h2 class="text-4xl md:text-5xl font-outfit font-800 text-white text-center glow-blue mb-3">Code Example</h2>
+     <p class="text-gray-400 text-center mb-20 max-w-2xl mx-auto text-lg">A simple ML prediction in Python using scikit-learn.</p>
+     <div class="rounded-2xl overflow-hidden border border-sky-500/20 card-glow">
+      <div class="flex items-center gap-3 px-6 py-4 bg-gradient-to-r from-gray-800/80 to-gray-900/80 border-b border-sky-500/10">
+       <div class="w-3 h-3 rounded-full bg-red-500/70"></div>
+       <div class="w-3 h-3 rounded-full bg-yellow-500/70"></div>
+       <div class="w-3 h-3 rounded-full bg-green-500/70"></div><span class="ml-4 text-sm text-gray-400 font-mono font-semibold">predict.py</span>
+      </div>
+      <pre class="p-8 bg-gray-900 overflow-x-auto text-sm leading-8 font-mono text-gray-200 text-base"><code><span class="text-purple-400">from</span> <span class="text-sky-300">sklearn.linear_model</span> <span class="text-purple-400">import</span> <span class="text-emerald-400">LinearRegression</span>
+<span class="text-purple-400">import</span> <span class="text-sky-300">numpy</span> <span class="text-purple-400">as</span> <span class="text-sky-300">np</span>
+
+<span class="text-gray-500"># Training data: hours studied → exam score</span>
+<span class="text-gray-200">X</span> = np.array([[<span class="text-amber-300">1</span>], [<span class="text-amber-300">2</span>], [<span class="text-amber-300">3</span>], [<span class="text-amber-300">4</span>], [<span class="text-amber-300">5</span>]])
+<span class="text-gray-200">y</span> = np.array([<span class="text-amber-300">20</span>, <span class="text-amber-300">40</span>, <span class="text-amber-300">60</span>, <span class="text-amber-300">75</span>, <span class="text-amber-300">90</span>])
+
+<span class="text-gray-500"># Train the model</span>
+<span class="text-gray-200">model</span> = <span class="text-emerald-400">LinearRegression</span>()
+model.<span class="text-sky-300">fit</span>(X, y)
+
+<span class="text-gray-500"># Predict score for 6 hours of study</span>
+<span class="text-gray-200">prediction</span> = model.<span class="text-sky-300">predict</span>([[<span class="text-amber-300">6</span>]])
+<span class="text-purple-400">print</span>(<span class="text-amber-200">f"Predicted score: </span><span class="text-sky-300">{prediction[0]:.1f}</span><span class="text-amber-200">"</span>)
+<span class="text-gray-500"># Output: Predicted score: 103.0</span></code></pre>
+     </div>
+    </div>
+   </section><!-- Applications -->
+   <section id="apps" class="py-32 px-6 relative">
+    <div class="section-divider mb-20"></div>
+    <div class="max-w-5xl mx-auto">
+     <h2 class="text-4xl md:text-5xl font-outfit font-800 text-white text-center glow-purple mb-3">Real-World Applications</h2>
+     <p class="text-gray-400 text-center mb-20 max-w-2xl mx-auto text-lg">AI is already transforming every industry around us.</p>
+     <div class="grid md:grid-cols-2 gap-8">
+      <div class="gradient-border rounded-2xl p-8 card-glow border border-rose-500/20 flex gap-6 transition-all duration-300 hover-scale group">
+       <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-rose-500/20 to-pink-500/20 flex items-center justify-center shrink-0 group-hover:from-rose-500/30 group-hover:to-pink-500/30 transition-all"><i data-lucide="heart-pulse" class="w-7 h-7 text-rose-400"></i>
+       </div>
+       <div>
+        <h3 class="text-white font-semibold text-lg">Healthcare</h3>
+        <p class="text-gray-400 text-sm mt-2 leading-relaxed">AI diagnoses diseases from medical images, predicts patient outcomes, and accelerates drug discovery.</p>
+       </div>
+      </div>
+      <div class="gradient-border rounded-2xl p-8 card-glow border border-sky-500/20 flex gap-6 transition-all duration-300 hover-scale group">
+       <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-sky-500/20 to-cyan-500/20 flex items-center justify-center shrink-0 group-hover:from-sky-500/30 group-hover:to-cyan-500/30 transition-all"><i data-lucide="car" class="w-7 h-7 text-sky-400"></i>
+       </div>
+       <div>
+        <h3 class="text-white font-semibold text-lg">Self-Driving Cars</h3>
+        <p class="text-gray-400 text-sm mt-2 leading-relaxed">Computer vision and reinforcement learning enable vehicles to navigate roads autonomously.</p>
+       </div>
+      </div>
+      <div class="gradient-border rounded-2xl p-8 card-glow border border-purple-500/20 flex gap-6 transition-all duration-300 hover-scale group">
+       <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 flex items-center justify-center shrink-0 group-hover:from-purple-500/30 group-hover:to-pink-500/30 transition-all"><i data-lucide="message-circle" class="w-7 h-7 text-purple-400"></i>
+       </div>
+       <div>
+        <h3 class="text-white font-semibold text-lg">Chatbots &amp; Assistants</h3>
+        <p class="text-gray-400 text-sm mt-2 leading-relaxed">LLMs power conversational AI that understands context and generates human-like responses.</p>
+       </div>
+      </div>
+      <div class="gradient-border rounded-2xl p-8 card-glow border border-amber-500/20 flex gap-6 transition-all duration-300 hover-scale group">
+       <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-amber-500/20 to-orange-500/20 flex items-center justify-center shrink-0 group-hover:from-amber-500/30 group-hover:to-orange-500/30 transition-all"><i data-lucide="graduation-cap" class="w-7 h-7 text-amber-400"></i>
+       </div>
+       <div>
+        <h3 class="text-white font-semibold text-lg">Education</h3>
+        <p class="text-gray-400 text-sm mt-2 leading-relaxed">Adaptive learning platforms personalize curriculum based on individual student performance.</p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Advantages & Limitations -->
+   <section class="py-32 px-6 bg-gray-900/60 relative">
+    <div class="section-divider mb-20"></div>
+    <div class="max-w-5xl mx-auto">
+     <div class="grid md:grid-cols-2 gap-8">
+      <div>
+       <h2 class="text-3xl md:text-4xl font-outfit font-800 text-white glow-blue mb-10 flex items-center gap-3"><i data-lucide="check-circle" class="w-8 h-8 text-emerald-400"></i> Advantages</h2>
+       <div class="space-y-5">
+        <div class="rounded-xl p-6 bg-gradient-to-br from-emerald-500/10 to-emerald-500/5 border border-emerald-500/20 hover-scale transition-all">
+         <h3 class="text-emerald-400 font-semibold text-base flex items-center gap-2">⚡ Automation</h3>
+         <p class="text-gray-400 text-sm mt-2 leading-relaxed">Handles repetitive tasks 24/7 without fatigue, freeing humans for creative work.</p>
+        </div>
+        <div class="rounded-xl p-6 bg-gradient-to-br from-emerald-500/10 to-emerald-500/5 border border-emerald-500/20 hover-scale transition-all">
+         <h3 class="text-emerald-400 font-semibold text-base flex items-center gap-2">🎯 Accuracy</h3>
+         <p class="text-gray-400 text-sm mt-2 leading-relaxed">Processes millions of data points to make precise predictions and decisions.</p>
+        </div>
+        <div class="rounded-xl p-6 bg-gradient-to-br from-emerald-500/10 to-emerald-500/5 border border-emerald-500/20 hover-scale transition-all">
+         <h3 class="text-emerald-400 font-semibold text-base flex items-center gap-2">🚀 Speed</h3>
+         <p class="text-gray-400 text-sm mt-2 leading-relaxed">Analyzes data in seconds that would take humans days or weeks.</p>
+        </div>
+       </div>
+      </div>
+      <div>
+       <h2 class="text-3xl md:text-4xl font-outfit font-800 text-white glow-purple mb-10 flex items-center gap-3"><i data-lucide="alert-triangle" class="w-8 h-8 text-amber-400"></i> Limitations</h2>
+       <div class="space-y-5">
+        <div class="rounded-xl p-6 bg-gradient-to-br from-rose-500/10 to-rose-500/5 border border-rose-500/20 hover-scale transition-all">
+         <h3 class="text-rose-400 font-semibold text-base flex items-center gap-2">⚖️ Bias</h3>
+         <p class="text-gray-400 text-sm mt-2 leading-relaxed">Models can inherit and amplify biases present in their training data.</p>
+        </div>
+        <div class="rounded-xl p-6 bg-gradient-to-br from-rose-500/10 to-rose-500/5 border border-rose-500/20 hover-scale transition-all">
+         <h3 class="text-rose-400 font-semibold text-base flex items-center gap-2">💼 Job Displacement</h3>
+         <p class="text-gray-400 text-sm mt-2 leading-relaxed">Automation may replace certain roles, requiring workforce reskilling.</p>
+        </div>
+        <div class="rounded-xl p-6 bg-gradient-to-br from-rose-500/10 to-rose-500/5 border border-rose-500/20 hover-scale transition-all">
+         <h3 class="text-rose-400 font-semibold text-base flex items-center gap-2">🔒 Privacy</h3>
+         <p class="text-gray-400 text-sm mt-2 leading-relaxed">Large-scale data collection raises serious surveillance and privacy concerns.</p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Future -->
+   <section id="future" class="py-32 px-6 relative">
+    <div class="section-divider mb-20"></div>
+    <div class="max-w-5xl mx-auto text-center">
+     <h2 class="text-4xl md:text-5xl font-outfit font-800 text-white glow-blue mb-3">Future Scope</h2>
+     <p class="text-gray-400 mb-20 max-w-2xl mx-auto text-lg">Where AI is heading — and why it matters.</p>
+     <div class="grid md:grid-cols-3 gap-8">
+      <div class="gradient-border rounded-2xl p-10 card-glow border border-sky-500/20 transition-all duration-300 hover-scale group">
+       <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-sky-500/20 to-cyan-500/20 flex items-center justify-center mx-auto mb-6 group-hover:from-sky-500/30 group-hover:to-cyan-500/30 transition-all"><i data-lucide="shield" class="w-8 h-8 text-sky-400"></i>
+       </div>
+       <h3 class="text-white font-semibold text-lg">Ethical AI</h3>
+       <p class="text-gray-400 text-sm mt-4 leading-relaxed">Frameworks ensuring fairness, transparency, and accountability in AI systems.</p>
+      </div>
+      <div class="gradient-border rounded-2xl p-10 card-glow border border-purple-500/20 transition-all duration-300 hover-scale group">
+       <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 flex items-center justify-center mx-auto mb-6 group-hover:from-purple-500/30 group-hover:to-pink-500/30 transition-all"><i data-lucide="zap" class="w-8 h-8 text-purple-400"></i>
+       </div>
+       <h3 class="text-white font-semibold text-lg">AGI Research</h3>
+       <p class="text-gray-400 text-sm mt-4 leading-relaxed">Working toward general-purpose intelligence that rivals human cognitive ability.</p>
+      </div>
+      <div class="gradient-border rounded-2xl p-10 card-glow border border-emerald-500/20 transition-all duration-300 hover-scale group">
+       <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-emerald-500/20 to-teal-500/20 flex items-center justify-center mx-auto mb-6 group-hover:from-emerald-500/30 group-hover:to-teal-500/30 transition-all"><i data-lucide="globe" class="w-8 h-8 text-emerald-400"></i>
+       </div>
+       <h3 class="text-white font-semibold text-lg">AI for Good</h3>
+       <p class="text-gray-400 text-sm mt-4 leading-relaxed">Climate modeling, disaster response, and solving humanity's biggest challenges.</p>
+      </div>
+     </div>
+    </div>
+   </section><!-- Conclusion -->
+   <section class="py-32 px-6 bg-gray-900/60 relative">
+    <div class="section-divider mb-20"></div>
+    <div class="max-w-3xl mx-auto text-center">
+     <div class="flex gap-3 justify-center mb-12">
+      <div class="neon-line h-1 w-8 rounded-full opacity-70"></div>
+      <div class="neon-line h-1 w-16 rounded-full"></div>
+      <div class="neon-line h-1 w-8 rounded-full opacity-70"></div>
+     </div>
+     <h2 class="text-4xl md:text-5xl font-outfit font-800 text-white glow-purple mb-8">The Future is Ours to Shape</h2>
+     <p class="text-gray-300 text-lg leading-relaxed mb-10">Artificial Intelligence is not a distant dream — it's today's reality. The question isn't whether AI will transform our world, but <span class="text-white font-semibold bg-gradient-to-r from-sky-400 to-purple-400 bg-clip-text text-transparent">how responsibly we guide it</span>. Let's build technology that amplifies human potential, not replaces it.</p>
+     <div class="mt-12 inline-flex items-center gap-3 px-8 py-4 rounded-full border border-purple-500/30 bg-gradient-to-r from-purple-500/10 to-pink-500/10 text-purple-300 font-semibold hover-scale transition-all">
+      <i data-lucide="rocket" class="w-5 h-5"></i> <span>Learn. Build. Innovate Responsibly.</span>
+     </div>
+    </div>
+   </section><!-- Footer -->
+   <footer class="py-8 px-6 border-t border-white/5">
+    <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-500">
+     <span>© 2025 Abhijit Barat · AI &amp; Machine Learning</span>
+     <div class="flex items-center gap-1">
+      Made with <i data-lucide="heart" class="w-4 h-4 text-rose-400 mx-1"></i> for education
+     </div>
+    </div>
+   </footer>
+  </div>
+  <script>
+const defaultConfig = {
+  hero_title: 'Artificial Intelligence & Machine Learning',
+  hero_subtitle: 'Transforming the Future of Technology',
+  creator_name: 'Created by Abhijit Barat',
+  background_color: '#030712',
+  surface_color: '#111827',
+  text_color: '#e5e7eb',
+  primary_action_color: '#38bdf8',
+  secondary_action_color: '#a855f7',
+  font_family: 'Outfit',
+  font_size: 16
+};
+
+function applyConfig(config) {
+  const t = (k) => config[k] || defaultConfig[k];
+
+  // Text content
+  const titleEl = document.getElementById('heroTitle');
+  const parts = t('hero_title').split('&');
+  if (parts.length > 1) {
+    titleEl.innerHTML = parts[0].trim() + '<br><span class="bg-gradient-to-r from-sky-400 to-purple-500 bg-clip-text text-transparent">&amp; ' + parts[1].trim() + '</span>';
+  } else {
+    titleEl.textContent = t('hero_title');
+  }
+  document.getElementById('heroSubtitle').textContent = t('hero_subtitle');
+  document.getElementById('creatorName').textContent = t('creator_name');
+
+  // Colors
+  document.body.style.backgroundColor = t('background_color');
+  document.body.style.color = t('text_color');
+
+  // Font
+  const font = t('font_family');
+  const stack = `${font}, Outfit, sans-serif`;
+  document.body.style.fontFamily = stack;
+
+  // Font size
+  const base = t('font_size');
+  document.body.style.fontSize = base + 'px';
+}
+
+window.elementSdk.init({
+  defaultConfig,
+  onConfigChange: async (config) => { applyConfig(config); },
+  mapToCapabilities: (config) => {
+    const c = (key) => ({
+      get: () => config[key] || defaultConfig[key],
+      set: (v) => { config[key] = v; window.elementSdk.setConfig({ [key]: v }); }
+    });
+    return {
+      recolorables: [c('background_color'), c('surface_color'), c('text_color'), c('primary_action_color'), c('secondary_action_color')],
+      borderables: [],
+      fontEditable: c('font_family'),
+      fontSizeable: { get: () => config.font_size || defaultConfig.font_size, set: (v) => { config.font_size = v; window.elementSdk.setConfig({ font_size: v }); } }
+    };
+  },
+  mapToEditPanelValues: (config) => new Map([
+    ['hero_title', config.hero_title || defaultConfig.hero_title],
+    ['hero_subtitle', config.hero_subtitle || defaultConfig.hero_subtitle],
+    ['creator_name', config.creator_name || defaultConfig.creator_name]
+  ])
+});
+
+applyConfig(defaultConfig);
+lucide.createIcons();
+</script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9e1643a1e1987a2e',t:'MTc3NDM2MTQ3Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
